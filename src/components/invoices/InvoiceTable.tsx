@@ -9,6 +9,7 @@ import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { Modal } from "@/components/ui/Modal";
 import { InvoicePreview } from "@/components/invoices/InvoicePreview";
 import { CreateInvoiceForm } from "@/components/invoices/CreateInvoiceForm";
+import { supabase } from "@/lib/supabase";
 
 interface InvoiceTableProps {
   invoices: Invoice[];
