@@ -10,9 +10,9 @@ export default function DashboardPage() {
   const [stats, setStats] = useState({
     totalValue: 0,
     totalCount: 0,
-    paid: { count: 0, value: 0 },
-    due: { count: 0, value: 0 },
-    overdue: { count: 0, value: 0 },
+    paid: { count: 0, amount: 0 },
+    due: { count: 0, amount: 0 },
+    overdue: { count: 0, amount: 0 },
   });
   const [loading, setLoading] = useState(true);
 
@@ -67,9 +67,9 @@ export default function DashboardPage() {
         setStats({
           totalValue,
           totalCount: formattedInvoices.length,
-          paid: { count: paidCount, value: paidValue },
-          due: { count: dueCount, value: dueValue },
-          overdue: { count: overdueCount, value: overdueValue }
+          paid: { count: paidCount, amount: paidValue },
+          due: { count: dueCount, amount: dueValue },
+          overdue: { count: overdueCount, amount: overdueValue }
         });
       }
       setLoading(false);
