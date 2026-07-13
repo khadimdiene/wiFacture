@@ -222,7 +222,7 @@ function AuthPageContent() {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <a href="https://wa.me/221781356677" target="_blank" rel="noreferrer"
+                    <a href="https://wa.me/221781357607" target="_blank" rel="noreferrer"
                       className="font-medium text-sky-600 hover:text-sky-500 transition-colors">
                       Oublié ?
                     </a>
@@ -249,7 +249,7 @@ function AuthPageContent() {
               </div>
             </div>
             <div className="mt-6">
-              <a href="https://wa.me/221781356677" target="_blank" rel="noreferrer"
+              <a href="https://wa.me/221781357607" target="_blank" rel="noreferrer"
                 className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-green-200 rounded-md shadow-sm text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors duration-200">
                 <Headset className="h-4 w-4" />
                 Contacter le support

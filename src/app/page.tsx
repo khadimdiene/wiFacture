@@ -583,7 +583,7 @@ export default function LandingPage() {
               <h4 className="text-sm font-bold text-white mb-4 uppercase tracking-wider">Contact</h4>
               <ul className="space-y-2.5">
                 <li className="flex items-center gap-2 text-sm text-gray-400"><Mail className="h-4 w-4" /> contact@wifacture.com</li>
-                <li className="flex items-center gap-2 text-sm text-gray-400"><Phone className="h-4 w-4" /> +221 78 135 66 77</li>
+                <li className="flex items-center gap-2 text-sm text-gray-400"><Phone className="h-4 w-4" /> +221 78 135 76 07</li>
                 <li className="flex items-center gap-2 text-sm text-gray-400"><Globe className="h-4 w-4" /> wifacture.com</li>
               </ul>
             </div>
