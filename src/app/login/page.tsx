@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/Label";
 import { Headset } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-export default function AuthPage() {
+function AuthPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -17,7 +17,6 @@ export default function AuthPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  // Form states
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,9 +49,7 @@ export default function AuthPage() {
         email,
         password,
         options: {
-          data: {
-            full_name: fullName,
-          },
+          data: { full_name: fullName },
           emailRedirectTo: `${window.location.origin}/login`,
         }
       });
@@ -63,17 +60,13 @@ export default function AuthPage() {
         setSuccess(true);
       }
     } else {
-      // Login
       if (!email || !password) {
         setError("Veuillez remplir tous les champs.");
         setLoading(false);
         return;
       }
 
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
 
       if (signInError) {
         setError(signInError.message);
@@ -115,11 +108,7 @@ export default function AuthPage() {
                   ? "bg-white text-gray-900 shadow-sm" 
                   : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => {
-                setActiveTab("login");
-                setError("");
-                setSuccess(false);
-              }}
+              onClick={() => { setActiveTab("login"); setError(""); setSuccess(false); }}
             >
               Connexion
             </button>
@@ -129,10 +118,7 @@ export default function AuthPage() {
                   ? "bg-white text-gray-900 shadow-sm" 
                   : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => {
-                setActiveTab("register");
-                setError("");
-              }}
+              onClick={() => { setActiveTab("register"); setError(""); }}
             >
               Inscription
             </button>
@@ -160,9 +146,7 @@ export default function AuthPage() {
                 <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-300">
                   <Label htmlFor="fullName">Votre nom complet</Label>
                   <Input 
-                    id="fullName" 
-                    name="fullName" 
-                    type="text" 
+                    id="fullName" name="fullName" type="text" 
                     placeholder="Amadou Fall"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
@@ -174,9 +158,7 @@ export default function AuthPage() {
               <div className="space-y-1.5">
                 <Label htmlFor="email">Adresse email</Label>
                 <Input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
+                  id="email" name="email" type="email" 
                   placeholder="vous@entreprise.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -188,60 +170,35 @@ export default function AuthPage() {
                 <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="space-y-1.5">
                     <Label htmlFor="password">Mot de passe</Label>
-                    <Input 
-                      id="password" 
-                      name="password" 
-                      type="password" 
-                      placeholder="Min. 6 car."
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required 
-                    />
+                    <Input id="password" name="password" type="password" placeholder="Min. 6 car."
+                      value={password} onChange={(e) => setPassword(e.target.value)} required />
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="confirmPassword">Confirmation</Label>
-                    <Input 
-                      id="confirmPassword" 
-                      name="confirmPassword" 
-                      type="password" 
-                      placeholder="Répétez"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required 
-                    />
+                    <Input id="confirmPassword" name="confirmPassword" type="password" placeholder="Répétez"
+                      value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                   </div>
                 </div>
               ) : (
                 <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-300">
                   <Label htmlFor="password">Mot de passe</Label>
-                  <Input 
-                    id="password" 
-                    name="password" 
-                    type="password" 
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required 
-                  />
+                  <Input id="password" name="password" type="password" placeholder="••••••••"
+                    value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
               )}
 
               {activeTab === "login" && (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 text-sky-500 focus:ring-sky-500 border-gray-300 rounded"
-                    />
+                    <input id="remember-me" name="remember-me" type="checkbox"
+                      className="h-4 w-4 text-sky-500 focus:ring-sky-500 border-gray-300 rounded" />
                     <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                       Se souvenir de moi
                     </label>
                   </div>
-
                   <div className="text-sm">
-                    <a href="https://wa.me/221770000000" target="_blank" rel="noreferrer" className="font-medium text-sky-600 hover:text-sky-500 transition-colors">
+                    <a href="https://wa.me/221770000000" target="_blank" rel="noreferrer"
+                      className="font-medium text-sky-600 hover:text-sky-500 transition-colors">
                       Oublié ?
                     </a>
                   </div>
@@ -250,10 +207,7 @@ export default function AuthPage() {
 
               <div className="pt-2">
                 <Button type="submit" className="w-full h-11 text-base bg-[#0F172A] hover:bg-[#1E293B]" disabled={loading}>
-                  {loading 
-                    ? "Chargement..." 
-                    : activeTab === "login" ? "Se connecter" : "Créer mon compte"
-                  }
+                  {loading ? "Chargement..." : activeTab === "login" ? "Se connecter" : "Créer mon compte"}
                 </Button>
               </div>
             </form>
@@ -269,14 +223,9 @@ export default function AuthPage() {
                 <span className="px-2 bg-white text-gray-500">Besoin d'aide ?</span>
               </div>
             </div>
-
             <div className="mt-6">
-              <a
-                href="https://wa.me/221770000000"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-green-200 rounded-md shadow-sm text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors duration-200"
-              >
+              <a href="https://wa.me/221770000000" target="_blank" rel="noreferrer"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-green-200 rounded-md shadow-sm text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors duration-200">
                 <Headset className="h-4 w-4" />
                 Contacter le support
               </a>
@@ -285,5 +234,17 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-sky-500 border-t-transparent" />
+      </div>
+    }>
+      <AuthPageContent />
+    </Suspense>
   );
 }
