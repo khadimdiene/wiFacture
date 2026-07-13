@@ -53,6 +53,10 @@ export default function HRPage() {
   const [deleteTarget, setDeleteTarget] = useState<AppUser | null>(null);
   
   const [inviteForm, setInviteForm] = useState({ name: "", email: "", roles: ["Lecture seule"] as Role[] });
+  
+  // Simulated subscription plan for demo purposes
+  const currentPlan = "Gratuit"; 
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   const filtered = users.filter(u =>
     u.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -71,6 +75,13 @@ export default function HRPage() {
 
   const handleInvite = () => {
     if (inviteForm.roles.length === 0) return;
+
+    if (currentPlan === "Gratuit" && users.length >= 1) {
+      setShowUpgradeModal(true);
+      setIsInviteModalOpen(false);
+      return;
+    }
+
     const newUser: AppUser = {
       id: Date.now().toString(),
       name: inviteForm.name || "Nouvel utilisateur",
@@ -111,6 +122,26 @@ export default function HRPage() {
 
   return (
     <div className="space-y-6">
+      {/* Upgrade Modal */}
+      <Modal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} title="Passez à la version supérieure">
+        <div className="space-y-4 max-w-md mx-auto text-center py-4">
+          <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Crown className="h-8 w-8 text-amber-500" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900">Limite d'utilisateurs atteinte</h3>
+          <p className="text-gray-500">
+            La formule <strong>Gratuite</strong> est limitée à 1 utilisateur. 
+            Pour ajouter votre équipe, cette fonctionnalité est réservée aux versions payantes.
+          </p>
+          <div className="pt-4 border-t border-gray-100">
+            <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 border-0 shadow-lg text-white" onClick={() => setShowUpgradeModal(false)}>
+              Essayer Pro (15 jours gratuits)
+            </Button>
+            <p className="text-xs text-gray-400 mt-3">Dans 15 jours, la facturation s'activera.</p>
+          </div>
+        </div>
+      </Modal>
+
       {/* Invite Modal */}
       <Modal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} title="Inviter un utilisateur">
         <div className="space-y-4 max-w-md mx-auto">

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Users, Store, CreditCard, TrendingUp, ShieldAlert, CheckCircle, Search, Filter } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 interface Profile {
   id: string;
@@ -19,7 +20,20 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
+  const router = useRouter();
+  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
+    const checkAdmin = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user || user.email !== "khadimdiene47@gmail.com") {
+        router.push("/dashboard");
+        return;
+      }
+      setIsAdmin(true);
+      fetchProfiles();
+    };
+
     const fetchProfiles = async () => {
       const { data, error } = await supabase.from("profiles").select("*").order("created_at", { ascending: false });
       if (!error && data) {
@@ -34,8 +48,12 @@ export default function AdminDashboardPage() {
       }
       setLoading(false);
     };
-    fetchProfiles();
-  }, []);
+    checkAdmin();
+  }, [router]);
+
+  if (!isAdmin) {
+    return <div className="p-8 text-center text-gray-500">Vérification des droits d'accès...</div>;
+  }
 
   const kpis = [
     { title: "Utilisateurs Inscrits", value: profiles.length, icon: Users, color: "text-blue-500", bg: "bg-blue-50" },

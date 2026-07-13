@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { Headset, ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { Headset, ArrowLeft, Eye, EyeOff, Wand2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 function AuthPageContent() {
@@ -30,6 +30,22 @@ function AuthPageContent() {
       setActiveTab("register");
     }
   }, [searchParams]);
+
+  const generatePassword = () => {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~";
+    let generated = "";
+    for (let i = 0; i < 12; i++) {
+      generated += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    // Ensure at least one uppercase, lowercase, number and special char
+    const prefix = "Aa1!";
+    generated = prefix + generated.slice(4);
+    
+    setPassword(generated);
+    setConfirmPassword(generated);
+    setShowPassword(true);
+    setShowConfirmPassword(true);
+  };
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,8 +194,15 @@ function AuthPageContent() {
 
               {activeTab === "register" ? (
                 <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="space-y-1.5 col-span-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="password">Mot de passe</Label>
+                      <button type="button" onClick={generatePassword} className="text-xs flex items-center gap-1 text-sky-600 hover:text-sky-700 font-medium transition-colors">
+                        <Wand2 className="h-3 w-3" /> Suggérer un mot de passe fort
+                      </button>
+                    </div>
+                  </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="password">Mot de passe</Label>
                     <div className="relative">
                       <Input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Min. 6 car."
                         value={password} onChange={(e) => setPassword(e.target.value)} required className="pr-10" />
