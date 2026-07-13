@@ -2,10 +2,11 @@
 
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { Headset } from "lucide-react";
+import { Headset, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 function AuthPageContent() {
@@ -21,6 +22,8 @@ function AuthPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("tab") === "register") {
@@ -78,16 +81,23 @@ function AuthPageContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+      {/* Bouton Retour Accueil */}
+      <div className="absolute top-6 left-6 sm:top-8 sm:left-8">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+          <ArrowLeft className="h-4 w-4" /> Retour au site
+        </Link>
+      </div>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="relative w-16 h-16 flex items-center justify-center overflow-hidden rounded-xl shadow-sm">
+          <Link href="/" className="relative w-16 h-16 flex items-center justify-center overflow-hidden rounded-xl shadow-sm hover:scale-105 transition-transform duration-200">
             <img 
               src="https://res.cloudinary.com/dwp4isflu/image/upload/v1783543056/logo_anime_1_yqs3cu.png" 
               alt="WiFacture Logo" 
               className="object-cover w-full h-full"
             />
-          </div>
+          </Link>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight">
           WiFacture
@@ -170,20 +180,35 @@ function AuthPageContent() {
                 <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="space-y-1.5">
                     <Label htmlFor="password">Mot de passe</Label>
-                    <Input id="password" name="password" type="password" placeholder="Min. 6 car."
-                      value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <div className="relative">
+                      <Input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="Min. 6 car."
+                        value={password} onChange={(e) => setPassword(e.target.value)} required className="pr-10" />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
                   </div>
                   <div className="space-y-1.5">
                     <Label htmlFor="confirmPassword">Confirmation</Label>
-                    <Input id="confirmPassword" name="confirmPassword" type="password" placeholder="Répétez"
-                      value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    <div className="relative">
+                      <Input id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} placeholder="Répétez"
+                        value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="pr-10" />
+                      <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                        {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-300">
                   <Label htmlFor="password">Mot de passe</Label>
-                  <Input id="password" name="password" type="password" placeholder="••••••••"
-                    value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  <div className="relative">
+                    <Input id="password" name="password" type={showPassword ? "text" : "password"} placeholder="••••••••"
+                      value={password} onChange={(e) => setPassword(e.target.value)} required className="pr-10" />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -197,7 +222,7 @@ function AuthPageContent() {
                     </label>
                   </div>
                   <div className="text-sm">
-                    <a href="https://wa.me/221770000000" target="_blank" rel="noreferrer"
+                    <a href="https://wa.me/221781356677" target="_blank" rel="noreferrer"
                       className="font-medium text-sky-600 hover:text-sky-500 transition-colors">
                       Oublié ?
                     </a>
@@ -224,7 +249,7 @@ function AuthPageContent() {
               </div>
             </div>
             <div className="mt-6">
-              <a href="https://wa.me/221770000000" target="_blank" rel="noreferrer"
+              <a href="https://wa.me/221781356677" target="_blank" rel="noreferrer"
                 className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-green-200 rounded-md shadow-sm text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors duration-200">
                 <Headset className="h-4 w-4" />
                 Contacter le support

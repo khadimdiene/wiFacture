@@ -459,7 +459,7 @@ export default function LandingPage() {
                 <span className="text-4xl font-extrabold text-gray-900">0</span>
                 <span className="text-lg font-semibold text-gray-400">FCFA</span>
               </div>
-              <div className="text-sm text-gray-400 mb-6">Pour toujours</div>
+              <div className="text-sm text-gray-400 mb-6">Pendant 1 mois</div>
               <ul className="space-y-3 mb-8">
                 {["5 factures / mois", "1 utilisateur", "Calcul TVA auto", "Export PDF"].map((f, i) => (
                   <li key={i} className="flex items-center gap-2.5 text-sm text-gray-600">
@@ -490,8 +490,8 @@ export default function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/login?tab=register" className="block text-center px-6 py-3.5 text-sm font-bold text-white rounded-xl bg-sky-500 hover:bg-sky-600 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-sky-500/30">
-                Essayer Pro gratuitement
+              <Link href="/login?tab=register&plan=pro" className="block text-center px-6 py-3.5 text-sm font-bold text-white rounded-xl bg-sky-500 hover:bg-sky-600 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-sky-500/30">
+                Essayer Pro gratuitement (15 jours)
               </Link>
             </div>
 
@@ -499,7 +499,7 @@ export default function LandingPage() {
             <div className={`bg-white rounded-2xl p-7 lg:p-8 border border-gray-200 shadow-sm transition-all duration-700 ${pricing.isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "450ms" }}>
               <div className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Business</div>
               <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-4xl font-extrabold text-gray-900">15 000</span>
+                <span className="text-4xl font-extrabold text-gray-900">10 000</span>
                 <span className="text-lg font-semibold text-gray-400">FCFA</span>
               </div>
               <div className="text-sm text-gray-400 mb-6">/ mois</div>
@@ -510,8 +510,8 @@ export default function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/login?tab=register" className="block text-center px-6 py-3 text-sm font-semibold text-gray-700 rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
-                Contacter les ventes
+              <Link href="/login?tab=register&plan=business" className="block text-center px-6 py-3 text-sm font-semibold text-gray-700 rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
+                Essayer gratuitement (15 jours)
               </Link>
             </div>
           </div>
@@ -583,7 +583,7 @@ export default function LandingPage() {
               <h4 className="text-sm font-bold text-white mb-4 uppercase tracking-wider">Contact</h4>
               <ul className="space-y-2.5">
                 <li className="flex items-center gap-2 text-sm text-gray-400"><Mail className="h-4 w-4" /> contact@wifacture.com</li>
-                <li className="flex items-center gap-2 text-sm text-gray-400"><Phone className="h-4 w-4" /> +221 77 000 00 00</li>
+                <li className="flex items-center gap-2 text-sm text-gray-400"><Phone className="h-4 w-4" /> +221 78 135 66 77</li>
                 <li className="flex items-center gap-2 text-sm text-gray-400"><Globe className="h-4 w-4" /> wifacture.com</li>
               </ul>
             </div>
@@ -594,7 +594,7 @@ export default function LandingPage() {
             <p className="text-sm text-gray-500">© {new Date().getFullYear()} WiFacture. Tous droits réservés.</p>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Fait avec fierté en Afrique 🌍
+              Développé par <a href="https://bambatechnologies.com" target="_blank" className="hover:text-white transition-colors underline">bambatechnologies.com</a>
             </div>
           </div>
         </div>
