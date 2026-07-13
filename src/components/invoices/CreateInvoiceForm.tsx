@@ -156,8 +156,8 @@ export function CreateInvoiceForm({ initialData }: { initialData?: any }) {
 
   const invoiceData = {
     clientId,
-    date: date ? format(date, "yyyy-MM-dd") : null,
-    dueDate: dueDate ? format(dueDate, "yyyy-MM-dd") : null,
+    date: date ? format(date, "yyyy-MM-dd") : undefined,
+    dueDate: dueDate ? format(dueDate, "yyyy-MM-dd") : undefined,
     items,
     subtotal,
     taxAmount,
